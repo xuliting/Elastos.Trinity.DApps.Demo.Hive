@@ -1,0 +1,19 @@
+<ion-content padding>
+    <p>hiveDemo Sdk Vesrion:<br/><span class="red">{{version}}</span></p>
+    <p *ngIf="isShowUpload">Picture uploading......</p>
+    <ion-button *ngIf="!isShowUpload&&currentImage!=''" (click)="putStringIpfs(currentImage)">
+        <span>upload Ipfs</span>
+    </ion-button>
+    <p *ngFor="let item of cidArr" (click)="go(item.cid)" class="blue">{{item.no}}:{{item.cid}}</p>
+    <p *ngIf="isShowPicture">Picture loading......</p>
+    <img [src]="currentImage" *ngIf="currentImage">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+        <ion-fab-button (click)="takePicture()">
+            <ion-icon name="camera"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

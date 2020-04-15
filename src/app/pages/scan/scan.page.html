@@ -1,0 +1,7 @@
+<ion-content padding>
+    <ion-button (click)="back()">back</ion-button>
+    <p>cid:{{cid}}</p>
+    <p>size:{{contentSize}}</p>
+    <p *ngIf="isShow">Picture loading......</p>
+    <img [src]="showCurrentImage" *ngIf="showCurrentImage" />
+</ion-content>
