@@ -141,7 +141,7 @@ export class PicturedetailsPage implements OnInit {
       titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
       appManager.setListener((msg)=>{
           if(msg["message"] === "navback"){
-               this.navCtrl.back();
+               this.navCtrl.pop();
           }
        });
     }

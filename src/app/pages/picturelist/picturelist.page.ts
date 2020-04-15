@@ -26,6 +26,7 @@ export class PicturelistPage implements OnInit {
       this.cidArr = this.getCidArr();
     }
     ngOnInit() {
+        
     }
     ionViewDidEnter() {
       // When the main screen is ready to be displayed, ask the app manager to make the app visible,
@@ -35,6 +36,7 @@ export class PicturelistPage implements OnInit {
       titleBarManager.setTitle("Picture List");
       titleBarManager.setBackgroundColor("#000000");
       titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
+      titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
       this.isShowPicture = false;
       if(this.ipfs === ""){
         this.getIpfs();
