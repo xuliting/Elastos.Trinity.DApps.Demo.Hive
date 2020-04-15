@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-import { HomePage } from './pages/home/home';
 const routes: Routes = [
-  { path: 'tab1Root', component: HomePage },
-  { path: 'scan', loadChildren: './pages/scan/scan.module#ScanPageModule' },
+  { path: 'picturedetails', loadChildren: './pages/picturedetails/picturedetails.module#PicturedetailsPageModule' },
+  { path: 'picturelist', loadChildren: './pages/picturelist/picturelist.module#PicturelistPageModule' },
 ];
 
 @NgModule({

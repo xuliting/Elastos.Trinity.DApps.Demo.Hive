@@ -5,18 +5,14 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 
-
 import { MyApp } from './app.component';
-
-import { HomePage } from './pages/home/home';
 
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 @NgModule({
   declarations: [
-    MyApp,
-    HomePage,
+    MyApp
   ],
   imports: [
     CommonModule,
@@ -26,8 +22,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
   ],
   bootstrap: [MyApp],
   entryComponents: [
-    MyApp,
-    HomePage
+    MyApp
   ],
   providers: [
     StatusBar,
