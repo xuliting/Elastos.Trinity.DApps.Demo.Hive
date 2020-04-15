@@ -36,13 +36,13 @@ export class HomePage {
     }
   }
 
-//   getVersion(){
-//     hiveManager.getVersion((version:string)=>{
-//            this.version =  version;
-//     },(err:string)=>{
-//          alert("err:"+err);
-//     })
-//   }
+  getVersion(){
+    hiveManager.getVersion((version:string)=>{
+           this.version =  version;
+    },(err:string)=>{
+         alert("err:"+err);
+    })
+  }
 
   takePicture() {
     this.currentImage = "";
