@@ -37,6 +37,12 @@
         </ion-fab-button>
     </ion-fab>
 
+    <ion-fab class="ion-padding" vertical="bottom" horizontal="start" slot="fixed" *ngIf="!isShowUpload && currentImage !== ''">
+        <ion-fab-button (click)="reset()" color="primary">
+            <ion-icon name="refresh"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
 <!-- <ion-footer>
   <ion-button (click)="hiveService.deleteStorage()">
     <ion-label>Delete Visit</ion-label>

@@ -12,90 +12,78 @@ declare let titleBarManager: TitleBarPlugin.TitleBarManager;
   styleUrls: ['./keyvalues.page.scss'],
 })
 export class KeyvaluesPage implements OnInit {
-  public version:string="";
+
+  public version:string = "";
   public keyValuesObj:HivePlugin.KeyValues = null;
-  public method = [{"name":"putValue"},{"name":"getValue"},{"name":"deleteKey"}];
+  public method = [
+    { "name": "putValue" },
+    { "name": "getValue" },
+    { "name": "deleteKey" }
+  ];
+
   constructor(
     public navCtrl: NavController,
     public zone: NgZone,
     public hiveService: HiveService
-   ){
-    
-  }
+  ) {}
 
   ngOnInit() {
-      this.addBack();
-  }
-
-  getVersion(){
-    this.hiveService.getVersion().then((version:string)=>{
-        this.version = version;
-        titleBarManager.setTitle('Hive Demo ' + this.version.slice(16,19));
-     }).catch(()=>{
-
-     });
+    this.addBack();
   }
 
   ionViewDidEnter(){
-    // When the main screen is ready to be displayed, ask the app manager to make the app visible,
-      // in case it was started hidden while loading.
-      this.getVersion();
-      appManager.setVisible("show");
+    appManager.setVisible("show");
+    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
 
-      // Update system status bar every time we re-enter this screen.
-      titleBarManager.setBackgroundColor("#ff9f46");
-      titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
-      titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
-      if(this.keyValuesObj === null){
-          this.hiveService.getKeyValuesObj().then(
-              (keyValuesObj:HivePlugin.KeyValues)=>{
-                  this.keyValuesObj = keyValuesObj;
-          }).catch((err)=>{
-                 alert(err);
-          });
-      }
+    if(this.keyValuesObj === null){
+      this.hiveService.getKeyValuesObj().then(
+          (keyValuesObj:HivePlugin.KeyValues)=>{
+              this.keyValuesObj = keyValuesObj;
+      }).catch((err)=>{
+              alert(err);
+      });
+    }
   }
 
   handleMethod(name:string):void{
     switch(name){
-        case "putValue":
-            this.putValue();
-            break;
-        case "getValue":
+      case "putValue":
+          this.putValue();
+          break;
+      case "getValue":
 
-            break;
-        case "deleteKey":
-           
-             break;        
+          break;
+      case "deleteKey":
+          
+          break;        
     }
   }
-    putValue():void {
-      console.log("==msg==putValue33"+this.keyValuesObj); 
-      try{  
-        this.hiveService.putValue(this.keyValuesObj,"testKey","testValue").then((result)=>{
-              console.log("==msg=="+result);
-        });
-      }catch(err){
-         console.log("==msg111=="+err);
-      } 
-     
-    }
+
+  putValue():void {
+    console.log("==msg==putValue33"+this.keyValuesObj); 
+    try {  
+      this.hiveService.putValue(this.keyValuesObj,"testKey","testValue").then((result) => {
+        console.log("==msg==" + result);
+      });
+    } catch(err) {
+      console.log("==msg111==" + err);
+    } 
+  }
 
 
-  addBack():void{
+  addBack():void {
     /**
      * msgobject：{
         "message": "navback",
-         "type": 1,
-         "from": "elastos.trinity.dApps.demo.hive"
+          "type": 1,
+          "from": "elastos.trinity.dApps.demo.hive"
         }
-     */
-  titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
-  appManager.setListener((msg)=>{
+      */
+    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
+    appManager.setListener((msg) => {
       if(msg["message"] === "navback"){
-           this.navCtrl.pop();
+          this.navCtrl.pop();
       }
-   });
-}
-
+    });
+  }
 }
