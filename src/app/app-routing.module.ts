@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: 'picturelist', loadChildren: './pages/picturelist/picturelist.module#PicturelistPageModule' },
   { path: 'onboard', loadChildren: './pages/onboard/onboard.module#OnboardPageModule' },
   { path: 'hivedemolist', loadChildren: './pages/hivedemolist/hivedemolist.module#HivedemolistPageModule' },
+  { path: 'keyvalues', loadChildren: './pages/keyvalues/keyvalues.module#KeyvaluesPageModule' },
 ];
 
 @NgModule({

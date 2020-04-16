@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
 declare let hiveManager:HivePlugin.HiveManager;
+declare var device: CordovaDevicePlugin.Device;
 
 
 
@@ -192,8 +193,51 @@ export class HiveService {
                   }
             });
        }
+       
+       /**
+       * get IFPS Object
+       * 
+       * parameter：{
+                 driveType: "3"
+                 };
+       */
 
+       getKeyValuesObj():Promise<HivePlugin.KeyValues>{
+        let type:string = HivePlugin.DriveType.ONEDRIVE.toString();
+        let options:any ={driveType:type,
+                          clientId:"afd3d647-a8b7-4723-bf9d-1b832f43b881",
+                          redirectUrl: "http://localhost:12345"
+                         };
+         return  new Promise((resolve, reject)=>{
+               this.createClient(options).then((client:HivePlugin.Client)=>{
+                       client.getKeyValues(
+                           (keyValuesObj:HivePlugin.KeyValues)=>{
+                            resolve(keyValuesObj); 
+                           },
+                          (err)=>{
+                            reject("err:  "+err);                 
+                           }
+                        );
+               }).catch((err:string)=>{
+                    reject("err:  "+err);
+               })
+           });
+       }
 
-
+       putValue(keyValuesObj:HivePlugin.KeyValues,
+                key: string, value: string):Promise<any>{
+           return new Promise((resolve, reject)=>{
+                    try{
+                        keyValuesObj.putValue(key,value).then(result=>{
+                            resolve(result);
+                        }).catch((err)=>{
+                              reject("err "+err);
+                        })
+                    }catch(err){
+                      console.log("==msg==777"+err);
+                    }
+                  
+           });      
+       }
 
 }

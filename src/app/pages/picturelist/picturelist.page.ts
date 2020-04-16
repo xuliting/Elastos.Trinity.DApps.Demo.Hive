@@ -17,7 +17,7 @@ export class PicturelistPage implements OnInit {
     public version: string = "";
     public currentImage:string = "";
     public ipfsObj:HivePlugin.IPFS=null;
-    public cidArr:[] = [];
+    public cidArr:any;
     public skey: string = "elastos.trinity.dApps.demo.hive";
     public isShowCamera = false;
     public isShowUpload = false;

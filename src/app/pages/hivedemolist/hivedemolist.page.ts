@@ -62,9 +62,8 @@ export class HivedemolistPage implements OnInit {
              break;
          case "1":
              break;
-             case "0":
-                break;
          case "2":
+              this.navCtrl.navigateForward("/keyvalues");
               break;        
      }
   }
