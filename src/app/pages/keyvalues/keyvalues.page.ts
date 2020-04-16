@@ -70,10 +70,9 @@ export class KeyvaluesPage implements OnInit {
     }
   }
     putValue():void {
-      console.log("==msg==putValue33"+JSON.stringify(this.keyValuesObj)); 
+      console.log("==msg==putValue33"+this.keyValuesObj); 
       try{  
-        this.hiveService.putValue(this.keyValuesObj,
-            "testKey","testValue").then((result)=>{
+        this.hiveService.putValue(this.keyValuesObj,"testKey","testValue").then((result)=>{
               console.log("==msg=="+result);
         });
       }catch(err){
