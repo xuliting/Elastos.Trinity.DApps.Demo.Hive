@@ -13,10 +13,11 @@ declare let hiveManager:HivePlugin.HiveManager;
 export class PicturedetailsPage implements OnInit {
     
     public cid:string = "";
-    public contentSize:string="";
-    public showCurrentImage:string="";
-    public ipfs:any="";
-    public isShow =false;
+    public contentSize: string = "";
+    public showCurrentImage: string = "";
+    public ipfs: any = "";
+    public isShow = false;
+
     constructor(
       public route:ActivatedRoute,
       public navCtrl: NavController,
@@ -30,15 +31,7 @@ export class PicturedetailsPage implements OnInit {
     }
   
     init(){
-  
-      // When the main screen is ready to be displayed, ask the app manager to make the app visible,
-      // in case it was started hidden while loading.
-      appManager.setVisible("show");
-      // Update system status bar every time we re-enter this screen.
-      titleBarManager.setTitle("View uploaded picture");
-      titleBarManager.setBackgroundColor("#000000");
-      titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);  
-      //add BackLisnter
+      //Add Back listener
       this.addBack();
       if(this.ipfs === ""){
           this.getIpfs().then((res)=>{
@@ -47,6 +40,7 @@ export class PicturedetailsPage implements OnInit {
               this.cid = data["cid"];
               this.getSizeIpfs(this.cid);
               this.getStringIpfs(this.cid);
+              titleBarManager.setTitle(this.cid.slice(0,10) + '...' + this.cid.slice(40,50));
             });
           }).catch((err)=>{
               alert(err);

@@ -2,10 +2,10 @@
     "id": "elastos.trinity.dApps.demo.hive",
     "version": "0.0.1",
     "version_code": 1,
-    "name": "hive demo",
-    "short_name": "hive demo",
-    "short_description": "hive demo",
-    "description": "hive demo",
+    "name": "Hive Demo",
+    "short_name": "Hive Demo",
+    "short_description": "Decentralized Storage",
+    "description": "Upload and store files",
     "start_url": "index.html",
     "type": "app",
     "start_visible": "hide",
@@ -22,9 +22,9 @@
         }
     ],
     "author": {
-        "name": "songjiazhun",
-        "email": "869077613@qq.com",
-        "website": ""
+        "name": "Elastos Foundation",
+        "email": "contact@elastos.org",
+        "website": "https://www.elastos.org"
     },
     "default_locale": "en",
     "plugins": [
@@ -34,7 +34,6 @@
         "HivePlugin"
     ],
     "urls": [
-        "http://www.yourappserver.com/*"
     ],
     "background_color": "#4e8ef7",
     "theme_display": "show",
