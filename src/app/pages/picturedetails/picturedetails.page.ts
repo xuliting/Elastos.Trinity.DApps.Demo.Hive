@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { NgZone} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HiveService } from 'src/app/services/hive.service';
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
-declare let hiveManager:HivePlugin.HiveManager;
+
 @Component({
   selector: 'app-picturedetails',
   templateUrl: './picturedetails.page.html',
@@ -15,13 +16,14 @@ export class PicturedetailsPage implements OnInit {
     public cid:string = "";
     public contentSize: string = "";
     public showCurrentImage: string = "";
-    public ipfs: any = "";
+    public ipfsObj:HivePlugin.IPFS=null;
     public isShow = false;
 
     constructor(
       public route:ActivatedRoute,
       public navCtrl: NavController,
-      public zone:NgZone
+      public zone:NgZone,
+      public hiveService: HiveService
      ){
       
     }
@@ -30,21 +32,22 @@ export class PicturedetailsPage implements OnInit {
        this.init();
     }
   
-    init(){
+    init():void{
       //Add Back listener
       this.addBack();
-      if(this.ipfs === ""){
-          this.getIpfs().then((res)=>{
+      if(this.ipfsObj === null){
+        this.hiveService.getIpfsObject().then((ipfs:HivePlugin.IPFS)=>{
+            this.ipfsObj = ipfs;
             this.route.queryParams.subscribe((data)=>{
-              this.ipfs = res;
-              this.cid = data["cid"];
-              this.getSizeIpfs(this.cid);
-              this.getStringIpfs(this.cid);
-              titleBarManager.setTitle(this.cid.slice(0,10) + '...' + this.cid.slice(40,50));
-            });
-          }).catch((err)=>{
-              alert(err);
-          });
+                      this.cid = data["cid"];
+                      this.getSizeIpfs(this.cid);
+                      this.getStringIpfs(this.cid);
+                      titleBarManager.setTitle(this.cid.slice(0,10) + '...' + this.cid.slice(40,50));
+                     });
+        }).catch((err)=>{
+            alert(err);
+        });
+
         }
     }
   
@@ -52,76 +55,27 @@ export class PicturedetailsPage implements OnInit {
       //this.init();
      }
   
-     createClient(){
-      return new Promise((resolve, reject) => {
-        try {
-          let options:any =   {
-            driveType:"3"
-           };
-          hiveManager.createClient(()=>{
-          },options,(res)=>{
-           resolve(res);
-          },(err)=>{
-            reject("err:"+err);
-          });
-         }
-         catch(err){
-        reject("err:"+err);
-         }
-      });
-    };
-  
-    getIpfs(){
-      return new Promise((resolve, reject) => {
-        this.createClient().then((client:any)=>{
-          try{
-            client.getIPFS((info:any)=>{
-             this.ipfs = info;
-             resolve(this.ipfs);
-            },(err: string)=>{
-              reject("err:"+err);
-            });
-          }catch(err){
-            reject("err:"+err);
-          }
-        }).catch((err)=>{
-          reject("err:"+err);
-        });
-      });
-    }
-  
-  
-    getStringIpfs(cid){
+    getStringIpfs(cid:string):void{
       this.isShow = true;
-      // {
-      //   "status": "success",
-      //   "content": "sssssssss",
-      //   "hid": null
-      // }
-      this.ipfs.get(cid).then((res:any)=>{
-        if(res["status"] === "success"){
-          this.showCurrentImage = res["content"];
-          this.isShow = false;
-        }
-      }).catch((err: string)=>{
-        alert("err"+err);
+      this.hiveService.ipfsGet(this.ipfsObj,cid).then((result)=>{
+        if(result["status"] === "success"){
+            this.showCurrentImage = result["content"];
+            this.isShow = false;
+          }
+      }).catch((err:string)=>{
+              this.isShow = false;
+              alert(err);
       });
     }
   
-    getSizeIpfs(cid){
-      // {
-      //   "status": "success",
-      //   "length": 9,
-      //   "hid": null
-      // }
-      this.ipfs.size(cid).then((res:any)=>{
-  
-        if(res["status"] === "success"){
-          this.contentSize = res["length"];
-        }
-      }).catch((err: string)=>{
-          alert("err"+err);
-      });
+    getSizeIpfs(cid:string):void{
+     this.hiveService.ipfsSize(this.ipfsObj,cid).then((result)=>{
+        if(result["status"] === "success"){
+            this.contentSize = result["length"];
+          }
+     }).catch((err:string)=>{
+         alert(err);
+     });
     }
   
     addBack():void{
@@ -139,6 +93,5 @@ export class PicturedetailsPage implements OnInit {
           }
        });
     }
-  
   }
 

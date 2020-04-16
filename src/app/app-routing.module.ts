@@ -5,6 +5,7 @@ const routes: Routes = [
   { path: 'picturedetails', loadChildren: './pages/picturedetails/picturedetails.module#PicturedetailsPageModule' },
   { path: 'picturelist', loadChildren: './pages/picturelist/picturelist.module#PicturelistPageModule' },
   { path: 'onboard', loadChildren: './pages/onboard/onboard.module#OnboardPageModule' },
+  { path: 'hivedemolist', loadChildren: './pages/hivedemolist/hivedemolist.module#HivedemolistPageModule' },
 ];
 
 @NgModule({

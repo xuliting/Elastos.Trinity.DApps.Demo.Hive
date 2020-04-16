@@ -32,7 +32,7 @@ export class MyApp {
         // Make sure to wait for platform to be ready before navigating to the first screen. Otherwise
         // plugins such as AppManager or TitleBarManager are not ready.
         //router.navigate(["tab1Root"]);
-        this.navController.navigateRoot("/picturelist");
+        this.navController.navigateRoot("/hivedemolist");
       });
   }
 

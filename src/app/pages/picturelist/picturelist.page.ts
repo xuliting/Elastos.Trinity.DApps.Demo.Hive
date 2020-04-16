@@ -5,7 +5,7 @@ import { HiveService } from 'src/app/services/hive.service';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
-declare let hiveManager:HivePlugin.HiveManager;
+
 
 @Component({
   selector: 'app-picturelist',
@@ -14,10 +14,10 @@ declare let hiveManager:HivePlugin.HiveManager;
 })
 export class PicturelistPage implements OnInit {
 
-    public version: string = "ElastosHiveSDK-v0.2";
-    public currentImage: any = "";
-    public ipfs: any= "";
-    public cidArr = [];
+    public version: string = "";
+    public currentImage:string = "";
+    public ipfsObj:HivePlugin.IPFS=null;
+    public cidArr:[] = [];
     public skey: string = "elastos.trinity.dApps.demo.hive";
     public isShowCamera = false;
     public isShowUpload = false;
@@ -26,76 +26,35 @@ export class PicturelistPage implements OnInit {
       public navCtrl: NavController,
       public zone: NgZone,
       public hiveService: HiveService
-     ){
+     ){  
       this.cidArr = this.getCidArr();
     }
 
     ngOnInit() {
+        this.addBack();
     }
 
     ionViewDidEnter() {
       // When the main screen is ready to be displayed, ask the app manager to make the app visible,
       // in case it was started hidden while loading.
+      this.getVersion(); 
       appManager.setVisible("show");
 
       // Update system status bar every time we re-enter this screen.
-      titleBarManager.setTitle('Hive Demo ' + this.version.slice(16,19));
       titleBarManager.setBackgroundColor("#ff9f46");
       titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
-      titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
-
-      if(this.ipfs === ""){
-        this.getIpfs();
+      console.log("==msg=="+this.ipfsObj);
+      if(this.ipfsObj === null){
+        this.hiveService.getIpfsObject().then((ipfs:HivePlugin.IPFS)=>{
+             this.ipfsObj = ipfs;
+        }).catch((err)=>{
+            alert(err);
+        });
       }
     }
 
-    getIpfs(){
-      return new Promise((resolve, reject) => {
-        this.createClient().then((client: any) => {
-          try{
-            client.getIPFS((info: any) => {
-             this.ipfs = info;
-             resolve(this.ipfs);
-            },(err: string) => {
-              reject("err: " + err);
-            });
-          } catch (err) {
-            reject("err: " + err);
-          }
-        }).catch((err) => {
-          reject("err: " + err);
-        });
-      });
-    }
 
-    createClient(){
-      return new Promise((resolve, reject) => {
-        try {
-          let options: any = {
-            driveType: "3"
-           };
-          hiveManager.createClient(() => {
-          }, options, (res) => {
-           resolve(res);
-          }, (err) => {
-            reject("err: " + err);
-          });
-         }
-         catch(err){
-        reject("err: " + err);
-         }
-      });
-    };
-  
-    getVersion(){
-      hiveManager.getVersion((version: string) => { 
-        this.version =  version;
-      }, (err: string) => {
-        alert("err:"+err);
-      });
-    }
-  
-    takePicture() {
+    takePicture():void {
       this.isShowCamera = true;
       this.currentImage = "";
       const options = {
@@ -117,30 +76,26 @@ export class PicturelistPage implements OnInit {
       }), options);
     }
   
-    putStringIpfs(str: string) {
-      // {
-      //   "status": "success",
-      //   "cid": "QmVw47HJCmEtTou7c9d68iVJ1ce8Yxk4dAU1w5SGGWyyFh",
-      //   "hid": null
-      // }
+    putStringIpfs(content: string):void{
+
       this.isShowUpload = true;
-      this.ipfs.put(str).then((res:any) => {
-          if(res["status"] === "success"){
-            let cid = res["cid"];
+      this.hiveService.ipfsPut(this.ipfsObj,content).then((result)=>{
+        if(result["status"] === "success"){
+            let cid = result["cid"];
             let obj = {"cid":cid,"no":(this.cidArr.length+1)}
             this.cidArr.push(obj);
             this.saveCidArr(this.cidArr);
             this.currentImage = "";
             this.isShowUpload = false;
           }
-  
-      }).catch((err: string) => {
+      }).catch((err)=>{
         this.isShowUpload = false;
-        alert("err" + err);
+        alert(err);
       });
+
     }
   
-    saveCidArr(arr: any){
+    saveCidArr(arr:[]):void{
       localStorage.setItem(this.skey,JSON.stringify(arr))
     }
   
@@ -153,7 +108,32 @@ export class PicturelistPage implements OnInit {
        }
     }
   
-    go(cid:string){
+    go(cid:string):void{
       this.navCtrl.navigateForward('/picturedetails', { queryParams: { "cid" : cid } });
     }
+
+    addBack():void{
+        /**
+         * msgobject：{
+            "message": "navback",
+             "type": 1,
+             "from": "elastos.trinity.dApps.demo.hive"
+            }
+         */
+      titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
+      appManager.setListener((msg)=>{
+          if(msg["message"] === "navback"){
+               this.navCtrl.pop();
+          }
+       });
+    }
+
+    getVersion():void{
+        this.hiveService.getVersion().then((version:string)=>{
+            this.version = version;
+            titleBarManager.setTitle('Hive Demo ' + this.version.slice(16,19));
+         }).catch(()=>{
+    
+         });
+      }
 }
