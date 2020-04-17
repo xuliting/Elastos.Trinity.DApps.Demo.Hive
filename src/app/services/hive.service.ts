@@ -195,20 +195,29 @@ export class HiveService {
       redirectUrl: "http://localhost:12345"
     };
     return new Promise((resolve, reject) => {
-      this.createClient((url:string)=>{
+      try {
+      this.createClient((url:string)=>{  
         this.iab.create(url, "_system", "location=yes").show();
       },options).then((client: HivePlugin.Client) => {
-        client.getKeyValues(
-          (keyValuesObj: HivePlugin.KeyValues) => {
-            resolve(keyValuesObj); 
-            },
-          (err) => {
-            reject("err:  "+err);                 
-          }
-        );
-      }).catch((err:string) => {
-        reject("err:  "+err);
-      });
+        client.connect((info)=>{
+            console.log("==msg==info"+info);
+            client.getKeyValues(
+                (keyValuesObj: HivePlugin.KeyValues) => {
+                  resolve(keyValuesObj); 
+                  },
+                (err) => {
+                  reject("err:  "+err);                 
+                }
+              );
+            }).catch((err:string) => {
+              reject("err:  "+err);
+            });
+        },(err)=>{
+           reject(err);    
+        })  
+     }catch(err){
+        reject(JSON.stringify(err));
+     }
     });
   }
 
@@ -220,6 +229,58 @@ export class HiveService {
     return new Promise((resolve, reject)=>{
       try {
         keyValuesObj.putValue(key,value).then(result => {
+          resolve(result);
+        }).catch((err) => {
+          reject("err "+err);
+        })
+      } catch(err) {
+        console.log("==msg==777"+err);
+      }
+    });      
+  }
+
+  setValue(
+    keyValuesObj: HivePlugin.KeyValues, 
+    key: string, 
+    value: string
+  ): Promise<any> {
+    return new Promise((resolve, reject)=>{
+      try {
+        keyValuesObj.setValue(key,value).then(result => {
+          resolve(result);
+        }).catch((err) => {
+          reject("err "+err);
+        })
+      } catch(err) {
+        console.log("==msg==777"+err);
+      }
+    });      
+  }
+
+  getValues(
+    keyValuesObj: HivePlugin.KeyValues, 
+    key: string, 
+  ): Promise<any> {
+    return new Promise((resolve, reject)=>{
+      try {
+        keyValuesObj.getValues(key).then(result => {
+          resolve(result);
+        }).catch((err) => {
+          reject("err "+err);
+        })
+      } catch(err) {
+        console.log("==msg==777"+err);
+      }
+    });      
+  }
+
+  deleteKey(
+    keyValuesObj: HivePlugin.KeyValues, 
+    key: string, 
+  ): Promise<any> {
+    return new Promise((resolve, reject)=>{
+      try {
+        keyValuesObj.deleteKey(key).then(result => {
           resolve(result);
         }).catch((err) => {
           reject("err "+err);

@@ -16,8 +16,9 @@ export class KeyvaluesPage implements OnInit {
   public keyValuesObj:HivePlugin.KeyValues = null;
   public method = [
     { "name": "putValue" },
-    { "name": "getValue" },
-    { "name": "deleteKey" }
+    { "name": "setValue" },
+    { "name": "getValues" },
+    { "name": "deleteKey"}
   ];
 
   constructor(
@@ -50,11 +51,15 @@ export class KeyvaluesPage implements OnInit {
       case "putValue":
           this.putValue();
           break;
-      case "getValue":
-        console.log("==msg==getValue");
+      case "setValue":
+          this.setValue();
+          break;    
+      case "getValues":
+        console.log("==msg==getValues");
+        this.getValues();
           break;
       case "deleteKey":
-          
+        this.deleteKey();  
           break;        
     }
   }
@@ -70,6 +75,42 @@ export class KeyvaluesPage implements OnInit {
     } catch(err) {
       console.log("==msg111==" + err);
     } 
+  }
+
+  setValue():void{
+    try {  
+        this.hiveService.setValue(this.keyValuesObj,"testKey","testValue").then((result) => {
+          console.log("==msg==" + result);
+        }).catch((err)=>{
+            alert(err);
+        });
+      } catch(err) {
+        console.log("==msg111==" + err);
+      }  
+  }
+
+  getValues():void{
+    try {  
+        this.hiveService.getValues(this.keyValuesObj,"testKey").then((result) => {
+          console.log("==msg==" + result);
+        }).catch((err)=>{
+            alert(err);
+        });
+      } catch(err) {
+        console.log("==msg111==" + err);
+      } 
+  }
+
+  deleteKey():void{
+    try {  
+        this.hiveService.deleteKey(this.keyValuesObj,"testKey").then((result) => {
+          console.log("==msg==" + result);
+        }).catch((err)=>{
+            alert(err);
+        });
+      } catch(err) {
+        console.log("==msg111==" + err);
+      } 
   }
 
 

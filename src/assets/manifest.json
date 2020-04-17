@@ -34,7 +34,12 @@
         "HivePlugin",
         "InAppBrowser"
     ],
-    "urls": [],
+    "urls": [
+        "http://login.microsoftonline.com/*",
+        "https://login.microsoftonline.com/*",
+        "http://graph.microsoft.com/*",
+        "https://graph.microsoft.com/*"
+    ],
     "background_color": "#4e8ef7",
     "theme_display": "show",
     "theme_color": "#4e8ef7"
