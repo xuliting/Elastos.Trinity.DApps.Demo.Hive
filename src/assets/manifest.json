@@ -31,10 +31,10 @@
         "Device",
         "NetworkStatus",
         "Camera",
-        "HivePlugin"
+        "HivePlugin",
+        "InAppBrowser"
     ],
-    "urls": [
-    ],
+    "urls": [],
     "background_color": "#4e8ef7",
     "theme_display": "show",
     "theme_color": "#4e8ef7"

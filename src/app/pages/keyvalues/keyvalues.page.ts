@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { NgZone} from '@angular/core';
 import { HiveService } from 'src/app/services/hive.service';
-
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
@@ -24,14 +23,15 @@ export class KeyvaluesPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public zone: NgZone,
-    public hiveService: HiveService
+    public hiveService: HiveService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit() { 
     this.addBack();
   }
 
   ionViewDidEnter(){
+    
     appManager.setVisible("show");
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
 
@@ -51,7 +51,7 @@ export class KeyvaluesPage implements OnInit {
           this.putValue();
           break;
       case "getValue":
-
+        console.log("==msg==getValue");
           break;
       case "deleteKey":
           
@@ -64,6 +64,8 @@ export class KeyvaluesPage implements OnInit {
     try {  
       this.hiveService.putValue(this.keyValuesObj,"testKey","testValue").then((result) => {
         console.log("==msg==" + result);
+      }).catch((err)=>{
+          alert(err);
       });
     } catch(err) {
       console.log("==msg111==" + err);

@@ -3,7 +3,7 @@ import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 declare let hiveManager:HivePlugin.HiveManager;
-declare var device: CordovaDevicePlugin.Device;
+
 
 @Injectable({
   providedIn: 'root'
@@ -196,7 +196,7 @@ export class HiveService {
     };
     return new Promise((resolve, reject) => {
       this.createClient((url:string)=>{
-        this.iab.create(url, "_system", "location=yes");
+        this.iab.create(url, "_system", "location=yes").show();
       },options).then((client: HivePlugin.Client) => {
         client.getKeyValues(
           (keyValuesObj: HivePlugin.KeyValues) => {
