@@ -3,7 +3,7 @@ import { Platform , NavController} from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { HiveService } from './services/hive.service';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'my-app',
@@ -16,7 +16,8 @@ export class MyApp {
     private statusBar: StatusBar, 
     private splashScreen: SplashScreen,
     private navController: NavController,
-    private hiveService: HiveService
+    private hiveService: HiveService,
+    private router: Router,
    ){
      this.initializeApp();          
    }
@@ -32,7 +33,8 @@ export class MyApp {
         // Make sure to wait for platform to be ready before navigating to the first screen. Otherwise
         // plugins such as AppManager or TitleBarManager are not ready.
         //router.navigate(["tab1Root"]);
-        this.navController.navigateRoot("/hivedemolist");
+        //this.navController.navigateRoot("/hivedemolist");
+        this.router.navigate(['hivedemolist']);
       });
   }
 

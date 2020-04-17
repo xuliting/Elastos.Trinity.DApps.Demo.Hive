@@ -38,7 +38,7 @@ export class HivedemolistPage implements OnInit {
     titleBarManager.setTitle('Hive Demo ' + this.hiveService.version.slice(16,19));
     titleBarManager.setBackgroundColor("#ff9f46");
     titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
-    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.HOME);
+    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.CLOSE);
   }
 
   /*
