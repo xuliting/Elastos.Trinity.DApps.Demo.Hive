@@ -200,15 +200,16 @@ export class HiveService {
         this.iab.create(url, "_system", "location=yes").show();
       },options).then((client: HivePlugin.Client) => {
         client.connect((info)=>{
-            console.log("==msg==info"+info);
-            client.getKeyValues(
-                (keyValuesObj: HivePlugin.KeyValues) => {
-                  resolve(keyValuesObj); 
-                  },
-                (err) => {
-                  reject("err:  "+err);                 
+            if(info === "success"){
+                client.getKeyValues(
+                    (keyValuesObj: HivePlugin.KeyValues) => {
+                      resolve(keyValuesObj); 
+                      },
+                    (err) => {
+                      reject("err:  "+err);                 
+                    }
+                  );
                 }
-              );
             }).catch((err:string) => {
               reject("err:  "+err);
             });
@@ -234,7 +235,7 @@ export class HiveService {
           reject("err "+err);
         })
       } catch(err) {
-        console.log("==msg==777"+err);
+        reject(JSON.stringify(err));
       }
     });      
   }
@@ -252,7 +253,7 @@ export class HiveService {
           reject("err "+err);
         })
       } catch(err) {
-        console.log("==msg==777"+err);
+        reject(JSON.stringify(err));
       }
     });      
   }
@@ -269,7 +270,7 @@ export class HiveService {
           reject("err "+err);
         })
       } catch(err) {
-        console.log("==msg==777"+err);
+        reject(JSON.stringify(err));
       }
     });      
   }
@@ -286,7 +287,7 @@ export class HiveService {
           reject("err "+err);
         })
       } catch(err) {
-        console.log("==msg==777"+err);
+        reject(JSON.stringify(err));
       }
     });      
   }
