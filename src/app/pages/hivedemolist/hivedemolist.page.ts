@@ -16,7 +16,7 @@ export class HivedemolistPage implements OnInit {
   // Demo List
   public demoList = [
     { "name": 'IPFS', "type": "0" },
-    { "name": 'One Drive', "type": "1" },
+    { "name": 'One Drive Files', "type": "1" },
     { "name": 'One Drive KeyValue', "type": "2" },
   ];
 
@@ -52,6 +52,7 @@ export class HivedemolistPage implements OnInit {
         this.navCtrl.navigateForward("/picturelist");
           break;
       case "1":
+        this.navCtrl.navigateForward("/onedrivefiles"); 
           break;
       case "2":
         this.navCtrl.navigateForward("/keyvalues");

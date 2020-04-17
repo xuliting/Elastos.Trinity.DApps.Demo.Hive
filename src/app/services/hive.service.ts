@@ -181,7 +181,7 @@ export class HiveService {
   }
        
   /**
-   * get IFPS Object
+   * get KeyValues Obj
    * 
    * parameter：{
              driveType: "3"
@@ -291,4 +291,123 @@ export class HiveService {
       }
     });      
   }
+  
+    /**
+   * get KeyValues Obj
+   * 
+   * parameter：{
+             driveType: "3"
+              };
+   **/
+  getFilesObj():Promise<HivePlugin.Files> {
+    let type:string = HivePlugin.DriveType.ONEDRIVE.toString();
+    let options:any = {
+      driveType:type,
+      clientId:"afd3d647-a8b7-4723-bf9d-1b832f43b881",
+      redirectUrl: "http://localhost:12345"
+    };
+    return new Promise((resolve, reject) => {
+      try {
+      this.createClient((url:string)=>{  
+        this.iab.create(url, "_system", "location=yes").show();
+      },options).then((client: HivePlugin.Client) => {
+        client.connect((info)=>{
+            if(info === "success"){
+                client.getFiles(
+                    (filesObj: HivePlugin.Files) => {
+                      resolve(filesObj); 
+                      },
+                    (err) => {
+                      reject("err:  "+err);                 
+                    }
+                  );
+                }
+            }).catch((err:string) => {
+              reject("err:  "+err);
+            });
+        },(err)=>{
+           reject(err);    
+        })  
+     }catch(err){
+        reject(JSON.stringify(err));
+     }
+    });
+  }
+
+  filePut(fileObj: HivePlugin.Files,
+          remoteFile: string,
+          data: string):Promise<any>{
+      return new Promise((resolve, reject)=>{
+            try {
+                fileObj.put(remoteFile,data).then((result)=>{
+                    resolve(result)
+                }).catch((err)=>{
+                    reject("err "+err);
+                })  
+            } catch (error) {
+                reject(JSON.stringify(error));
+            }
+      });
+  }
+
+  fileGetAsString(fileObj: HivePlugin.Files,
+    remoteFile: string):Promise<any>{
+    return new Promise((resolve, reject)=>{
+      try {
+          fileObj.getAsString(remoteFile).then((result)=>{
+              resolve(result)
+          }).catch((err)=>{
+              reject("err "+err);
+          })  
+      } catch (error) {
+          reject(JSON.stringify(error));
+      }
+   });
+  }
+
+  fileSize(fileObj: HivePlugin.Files,
+    remoteFile: string):Promise<any>{
+    return new Promise((resolve, reject)=>{
+      try {
+          fileObj.size(remoteFile).then((result)=>{
+              resolve(result)
+          }).catch((err)=>{
+              reject("err "+err);
+          })  
+      } catch (error) {
+          reject(JSON.stringify(error));
+      }
+   });
+  }
+
+  deleteFile(fileObj: HivePlugin.Files,
+    remoteFile: string):Promise<any>{
+    return new Promise((resolve, reject)=>{
+      try {
+          fileObj.deleteFile(remoteFile).then((result)=>{
+              resolve(result)
+          }).catch((err)=>{
+              reject("err "+err);
+          })  
+      } catch (error) {
+          reject(JSON.stringify(error));
+      }
+   });
+  }
+
+  fileList(fileObj: HivePlugin.Files):Promise<any>{
+    return new Promise((resolve, reject)=>{
+      try {
+          fileObj.list().then((result)=>{
+              resolve(result)
+          }).catch((err)=>{
+              reject("err "+err);
+          })  
+      } catch (error) {
+          reject(JSON.stringify(error));
+      }
+   });
+  }
+
+
 }

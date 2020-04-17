@@ -138,4 +138,8 @@ export class KeyvaluesPage implements OnInit {
       }
     });
   }
+
+  ionViewDidLeave(){
+    this.keyValuesObj = null;
+}
 }

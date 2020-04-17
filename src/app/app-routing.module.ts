@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: 'onboard', loadChildren: './pages/onboard/onboard.module#OnboardPageModule' },
   { path: 'hivedemolist', loadChildren: './pages/hivedemolist/hivedemolist.module#HivedemolistPageModule' },
   { path: 'keyvalues', loadChildren: './pages/keyvalues/keyvalues.module#KeyvaluesPageModule' },
+  { path: 'onedrivefiles', loadChildren: './pages/onedrivefiles/onedrivefiles.module#OnedrivefilesPageModule' },
 ];
 
 @NgModule({
