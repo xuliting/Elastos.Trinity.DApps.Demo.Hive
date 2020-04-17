@@ -24,6 +24,8 @@ export class KeyvaluesPage implements OnInit {
 
   public content:string = "";
 
+  public testKey:string = "test";
+
   constructor(
     public navCtrl: NavController,
     public zone: NgZone,
@@ -74,7 +76,7 @@ export class KeyvaluesPage implements OnInit {
 
   putValue():void { 
     try {  
-      this.hiveService.putValue(this.keyValuesObj,"testKey","testValue").then((result) => {
+      this.hiveService.putValue(this.keyValuesObj,this.testKey,"testValue").then((result) => {
         this.content = JSON.stringify(result);
       }).catch((err)=>{
           alert(err);
@@ -86,7 +88,7 @@ export class KeyvaluesPage implements OnInit {
 
   setValue():void{
     try {  
-        this.hiveService.setValue(this.keyValuesObj,"testKey","testValue111").then((result) => {
+        this.hiveService.setValue(this.keyValuesObj,this.testKey,"testValue111").then((result) => {
           this.content = JSON.stringify(result);
         }).catch((err)=>{
             alert(err);
@@ -98,7 +100,7 @@ export class KeyvaluesPage implements OnInit {
 
   getValues():void{
     try {  
-        this.hiveService.getValues(this.keyValuesObj,"testKey").then((result) => {
+        this.hiveService.getValues(this.keyValuesObj,this.testKey).then((result) => {
           this.content = JSON.stringify(result);
         }).catch((err)=>{
             alert(err);
@@ -110,7 +112,7 @@ export class KeyvaluesPage implements OnInit {
 
   deleteKey():void{
     try {  
-        this.hiveService.deleteKey(this.keyValuesObj,"testKey").then((result) => {
+        this.hiveService.deleteKey(this.keyValuesObj,this.testKey).then((result) => {
             this.content = JSON.stringify(result);
         }).catch((err)=>{
             alert(err);
