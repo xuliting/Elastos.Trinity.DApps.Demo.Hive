@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 declare let hiveManager:HivePlugin.HiveManager;
 declare var device: CordovaDevicePlugin.Device;
 
@@ -15,7 +15,8 @@ export class HiveService {
 
   constructor(
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private iab: InAppBrowser
   ) {}
 
   init() {
@@ -52,11 +53,11 @@ export class HiveService {
   /**
   * hive createClient
   */
-  createClient(options:any):Promise<HivePlugin.Client> {
+  createClient(hander:any,options:any):Promise<HivePlugin.Client> {
     return new Promise((resolve, reject)=>{
     try{
       hiveManager.createClient(
-        () => {},
+        hander,
         options,
         (info) => {
           resolve(info);
@@ -81,7 +82,7 @@ export class HiveService {
     let options:any ={ driveType:type };
     return new Promise((resolve, reject) => {
       try {
-        this.createClient(options).then((client:HivePlugin.Client) => {
+        this.createClient(null,options).then((client:HivePlugin.Client) => {
           try {
             client.getIPFS((ipfs:HivePlugin.IPFS) => {
               resolve(ipfs);
@@ -194,7 +195,9 @@ export class HiveService {
       redirectUrl: "http://localhost:12345"
     };
     return new Promise((resolve, reject) => {
-      this.createClient(options).then((client: HivePlugin.Client) => {
+      this.createClient((url:string)=>{
+        this.iab.create(url, "_system", "location=yes");
+      },options).then((client: HivePlugin.Client) => {
         client.getKeyValues(
           (keyValuesObj: HivePlugin.KeyValues) => {
             resolve(keyValuesObj); 

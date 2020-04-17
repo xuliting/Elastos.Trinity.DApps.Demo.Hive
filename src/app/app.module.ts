@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 import { MyApp } from './app.component';
 
@@ -29,6 +30,7 @@ import { IonicStorageModule } from '@ionic/storage';
   providers: [
     StatusBar,
     SplashScreen,
+    InAppBrowser,
     Platform,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {provide: ErrorHandler, useClass: ErrorHandler}
