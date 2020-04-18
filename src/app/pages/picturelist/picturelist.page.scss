@@ -1,21 +1,18 @@
-ion-title, h1 {
-    font-weight: 600;
-    font-size: 20px;
-    padding: 0;
-    letter-spacing: 1.5px;
-}
-
-.list-container, .img-container, .loader-container {
+.img-container, .loader-container {
     min-height: 100%;
     background: linear-gradient(178deg,#ffb046 -66%,#f52880 371%) 0 0;
-    color: #ffffff;    
-}
-
-.img-container, .loader-container {
+    color: #ffffff;   
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    h1 {
+        font-weight: 600;
+        font-size: 20px;
+        padding: 0;
+        letter-spacing: 1.5px;
+    }
 
     ion-spinner {
         color: white;
@@ -43,16 +40,6 @@ ion-title, h1 {
 }
 
 .list-container {
-    ion-card {
-        border-radius: 15px;
-        background: #FAFAFA;
-
-        ion-card-subtitle {
-            color: #3880ff;
-            font-weight: 500;
-        }
-    }
-
     ion-button {
         margin-top: 10px;
         height: 40px;

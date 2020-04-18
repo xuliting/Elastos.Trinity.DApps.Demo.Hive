@@ -1,10 +1,10 @@
 <ion-content>
     <div class="list-container ion-padding ion-text-center">
-        <ion-title>KeyValues</ion-title>
-        <p *ngIf="mName" class="result">click Method: {{mName}}</p>
-        <p *ngIf="content" class="result">result: {{content}}</p>
+        <ion-title>Key Values</ion-title>
         <ion-card *ngFor="let item of method" class="ion-padding" (click)="handleMethod(item.name)">
             <ion-card-subtitle>{{ item.name }}</ion-card-subtitle>
         </ion-card>
+        <h3 *ngIf="mName" class="result">Click Method: {{ mName }}</h3>
+        <h3 *ngIf="content" class="result">Result: {{ content }}</h3>
     </div>
 </ion-content>

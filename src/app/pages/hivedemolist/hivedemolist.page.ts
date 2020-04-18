@@ -17,7 +17,7 @@ export class HivedemolistPage implements OnInit {
   public demoList = [
     { "name": 'IPFS', "type": "0" },
     { "name": 'One Drive Files', "type": "1" },
-    { "name": 'One Drive KeyValue', "type": "2" },
+    { "name": 'One Drive Key Value', "type": "2" },
   ];
 
   constructor(
