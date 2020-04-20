@@ -12,13 +12,16 @@ export class HiveService {
 
   public firstVisit = false;
   public version: string = "";
-
+  public client:HivePlugin.Client = null;
   constructor(
     private router: Router,
     private storageService: StorageService,
-    private iab: InAppBrowser
+    private iab: InAppBrowser,
   ) {}
 
+  getClientObj(){
+    return this.client;
+  }
   init() {
     this.getVisit();
     this.getVersion();
@@ -201,6 +204,7 @@ export class HiveService {
       },options).then((client: HivePlugin.Client) => {
         client.connect((info)=>{
             if(info === "success"){
+                this.client = client;
                 client.getKeyValues(
                     (keyValuesObj: HivePlugin.KeyValues) => {
                       resolve(keyValuesObj); 
@@ -313,6 +317,7 @@ export class HiveService {
       },options).then((client: HivePlugin.Client) => {
         client.connect((info)=>{
             if(info === "success"){
+                this.client = client;
                 client.getFiles(
                     (filesObj: HivePlugin.Files) => {
                       resolve(filesObj); 

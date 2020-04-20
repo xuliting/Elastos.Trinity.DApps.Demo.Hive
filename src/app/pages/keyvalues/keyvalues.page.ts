@@ -140,6 +140,14 @@ export class KeyvaluesPage implements OnInit {
   }
 
   ionViewDidLeave(){
+   let client = this.hiveService.getClientObj();
+   if(client!=null){
+       client.disConnect((info:string)=>{
+          
+       },(err)=>{
+          alert(err);
+       });
+   }  
     this.keyValuesObj = null;
 }
 }

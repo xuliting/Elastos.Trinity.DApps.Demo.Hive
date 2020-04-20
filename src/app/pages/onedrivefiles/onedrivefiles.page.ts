@@ -142,6 +142,14 @@ export class OnedrivefilesPage implements OnInit {
     }
 
     ionViewDidLeave(){
+        let client = this.hiveService.getClientObj();
+        if(client!=null){
+            client.disConnect((info:string)=>{
+              
+            },(err)=>{
+                alert(err);
+            });
+        }  
         this.fileObj = null;
     }
   }
