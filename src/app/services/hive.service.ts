@@ -74,7 +74,7 @@ export class HiveService {
 
   /**
     * get IFPS Object
-    * 
+    *
     * parameter：{
                  driveType: "3"
                  };
@@ -100,7 +100,7 @@ export class HiveService {
           reject("err: "+err);
         });
       } catch (error) {
-        reject("err: "+JSON.stringify(error)); 
+        reject("err: "+JSON.stringify(error));
     }});
   }
 
@@ -108,7 +108,7 @@ export class HiveService {
    * Put data to IPFS backend.
    *
    * @param content     The data to write.
-   * @return    
+   * @return
    *  {
         "status": "success",
         "cid": "QmVw47HJCmEtTou7c9d68iVJ1ce8Yxk4dAU1w5SGGWyyFh",
@@ -123,8 +123,8 @@ export class HiveService {
         }).catch((err:string) => {
           reject("err: " + err);
         });
-      } catch (error) {  
-        reject("err: "+JSON.stringify(error)); 
+      } catch (error) {
+        reject("err: "+JSON.stringify(error));
       }
     });
   }
@@ -150,12 +150,12 @@ export class HiveService {
         }).catch((err:string)=>{
             reject("err: "+err);
         });
-      } catch (error) {  
-        reject("err: "+JSON.stringify(error)); 
+      } catch (error) {
+        reject("err: "+JSON.stringify(error));
       }
     });
   }
-       
+
   /**
     * Get IPFS backend data length.
     *
@@ -177,15 +177,15 @@ export class HiveService {
         }).catch((err:string) => {
           reject("err: "+err);
         });
-      } catch (error) {  
-        reject("err: "+JSON.stringify(error)); 
+      } catch (error) {
+        reject("err: "+JSON.stringify(error));
       }
     });
   }
-       
+
   /**
    * get KeyValues Obj
-   * 
+   *
    * parameter：{
              driveType: "3"
               };
@@ -199,7 +199,7 @@ export class HiveService {
     };
     return new Promise((resolve, reject) => {
       try {
-      this.createClient((url:string)=>{  
+      this.createClient((url:string)=>{
         this.iab.create(url, "_system", "location=yes").show();
       },options).then((client: HivePlugin.Client) => {
         client.connect((info)=>{
@@ -207,19 +207,19 @@ export class HiveService {
                 this.client = client;
                 client.getKeyValues(
                     (keyValuesObj: HivePlugin.KeyValues) => {
-                      resolve(keyValuesObj); 
+                      resolve(keyValuesObj);
                       },
                     (err) => {
-                      reject("err:  "+err);                 
+                      reject("err:  "+err);
                     }
                   );
                 }
-            }).catch((err:string) => {
+            }), ((err:string) => {
               reject("err:  "+err);
             });
         },(err)=>{
-           reject(err);    
-        })  
+           reject(err);
+        })
      }catch(err){
         reject(JSON.stringify(err));
      }
@@ -227,8 +227,8 @@ export class HiveService {
   }
 
   putValue(
-    keyValuesObj: HivePlugin.KeyValues, 
-    key: string, 
+    keyValuesObj: HivePlugin.KeyValues,
+    key: string,
     value: string
   ): Promise<any> {
     return new Promise((resolve, reject)=>{
@@ -241,12 +241,12 @@ export class HiveService {
       } catch(err) {
         reject(JSON.stringify(err));
       }
-    });      
+    });
   }
 
   setValue(
-    keyValuesObj: HivePlugin.KeyValues, 
-    key: string, 
+    keyValuesObj: HivePlugin.KeyValues,
+    key: string,
     value: string
   ): Promise<any> {
     return new Promise((resolve, reject)=>{
@@ -259,12 +259,12 @@ export class HiveService {
       } catch(err) {
         reject(JSON.stringify(err));
       }
-    });      
+    });
   }
 
   getValues(
-    keyValuesObj: HivePlugin.KeyValues, 
-    key: string, 
+    keyValuesObj: HivePlugin.KeyValues,
+    key: string,
   ): Promise<any> {
     return new Promise((resolve, reject)=>{
       try {
@@ -276,12 +276,12 @@ export class HiveService {
       } catch(err) {
         reject(JSON.stringify(err));
       }
-    });      
+    });
   }
 
   deleteKey(
-    keyValuesObj: HivePlugin.KeyValues, 
-    key: string, 
+    keyValuesObj: HivePlugin.KeyValues,
+    key: string,
   ): Promise<any> {
     return new Promise((resolve, reject)=>{
       try {
@@ -293,12 +293,12 @@ export class HiveService {
       } catch(err) {
         reject(JSON.stringify(err));
       }
-    });      
+    });
   }
-  
+
     /**
    * get KeyValues Obj
-   * 
+   *
    * parameter：{
              driveType: "3"
               };
@@ -312,7 +312,7 @@ export class HiveService {
     };
     return new Promise((resolve, reject) => {
       try {
-      this.createClient((url:string)=>{  
+      this.createClient((url:string)=>{
         this.iab.create(url, "_system", "location=yes").show();
       },options).then((client: HivePlugin.Client) => {
         client.connect((info)=>{
@@ -320,19 +320,19 @@ export class HiveService {
                 this.client = client;
                 client.getFiles(
                     (filesObj: HivePlugin.Files) => {
-                      resolve(filesObj); 
+                      resolve(filesObj);
                       },
                     (err) => {
-                      reject("err:  "+err);                 
+                      reject("err:  "+err);
                     }
                   );
                 }
-            }).catch((err:string) => {
+            }, (err:string) => {
               reject("err:  "+err);
             });
         },(err)=>{
-           reject(err);    
-        })  
+           reject(err);
+        })
      }catch(err){
         reject(JSON.stringify(err));
      }
@@ -348,7 +348,7 @@ export class HiveService {
                     resolve(result)
                 }).catch((err)=>{
                     reject("err "+err);
-                })  
+                })
             } catch (error) {
                 reject(JSON.stringify(error));
             }
@@ -363,7 +363,7 @@ export class HiveService {
               resolve(result)
           }).catch((err)=>{
               reject("err "+err);
-          })  
+          })
       } catch (error) {
           reject(JSON.stringify(error));
       }
@@ -378,7 +378,7 @@ export class HiveService {
               resolve(result)
           }).catch((err)=>{
               reject("err "+err);
-          })  
+          })
       } catch (error) {
           reject(JSON.stringify(error));
       }
@@ -393,7 +393,7 @@ export class HiveService {
               resolve(result)
           }).catch((err)=>{
               reject("err "+err);
-          })  
+          })
       } catch (error) {
           reject(JSON.stringify(error));
       }
@@ -407,7 +407,7 @@ export class HiveService {
               resolve(result)
           }).catch((err)=>{
               reject("err "+err);
-          })  
+          })
       } catch (error) {
           reject(JSON.stringify(error));
       }
