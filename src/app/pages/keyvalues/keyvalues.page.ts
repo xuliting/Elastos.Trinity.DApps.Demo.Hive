@@ -39,6 +39,9 @@ export class KeyvaluesPage implements OnInit {
   ionViewDidEnter(){
     
     appManager.setVisible("show");
+    appManager.setIntentListener((msg)=>{
+        console.log("==msg==");
+    });
     titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
 
     if(this.keyValuesObj === null){

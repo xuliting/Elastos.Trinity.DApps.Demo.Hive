@@ -196,6 +196,7 @@ export class HiveService {
       driveType:type,
       clientId:"afd3d647-a8b7-4723-bf9d-1b832f43b881",
       redirectUrl: "http://localhost:12345"
+      //redirectUrl:"https://scheme.elastos.org"
     };
     return new Promise((resolve, reject) => {
       try {
@@ -309,6 +310,7 @@ export class HiveService {
       driveType:type,
       clientId:"afd3d647-a8b7-4723-bf9d-1b832f43b881",
       redirectUrl: "http://localhost:12345"
+      //redirectUrl:"https://scheme.elastos.org"
     };
     return new Promise((resolve, reject) => {
       try {
