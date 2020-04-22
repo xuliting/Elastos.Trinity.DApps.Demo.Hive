@@ -34,10 +34,6 @@
         "HivePlugin",
         "InAppBrowser"
     ],
-    "intent_filters": [
-        { "action": "hivedemo" }
-
-    ],
     "urls": [
         "http://login.microsoftonline.com/*",
         "https://login.microsoftonline.com/*",

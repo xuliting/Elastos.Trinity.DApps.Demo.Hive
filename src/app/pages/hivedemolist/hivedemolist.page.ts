@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController} from '@ionic/angular';
 import { NgZone} from '@angular/core';
 import { HiveService } from 'src/app/services/hive.service';
-
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
@@ -23,7 +22,8 @@ export class HivedemolistPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public zone: NgZone,
-    public hiveService: HiveService
+    public hiveService: HiveService,
+    public alertController:AlertController
   ) {}
 
   ngOnInit() {
@@ -52,11 +52,22 @@ export class HivedemolistPage implements OnInit {
         this.navCtrl.navigateForward("/picturelist");
           break;
       case "1":
-        this.navCtrl.navigateForward("/onedrivefiles"); 
+        this.presentAlert();  
+        //this.navCtrl.navigateForward("/onedrivefiles"); 
           break;
       case "2":
-        this.navCtrl.navigateForward("/keyvalues");
+        this.presentAlert();   
+        //this.navCtrl.navigateForward("/keyvalues");
           break;        
     }
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Tips',    
+      message: 'Feature not yet available',
+      buttons: ['Ok']
+    });
+    await alert.present();
   }
 }
