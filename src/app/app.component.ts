@@ -34,7 +34,7 @@ export class MyApp {
         // plugins such as AppManager or TitleBarManager are not ready.
         //router.navigate(["tab1Root"]);
         //this.navController.navigateRoot("/hivedemolist");
-        this.router.navigate(['onboard']);
+        this.router.navigate(['hivedemolist']);
       });
   }
 
