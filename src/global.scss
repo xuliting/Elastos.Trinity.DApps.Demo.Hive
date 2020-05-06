@@ -84,7 +84,6 @@
 
 .list-container {
   min-height: 100%;
-  background: linear-gradient(178deg, #ffb046 -66%, #f52880 371%) 0 0;
   color: #ffffff;
 
   ion-title {
@@ -93,15 +92,16 @@
       padding: 0;
       letter-spacing: 1.5px;
       margin: 10px 0px;
+      color: #21313d;
   }    
 
   ion-card {
       border-radius: 30px;
-      background: #FAFAFA;
+      background: linear-gradient(to bottom, #181d20 0%,  #21313d 100%);
       margin: 10px;
 
       ion-card-subtitle {
-          color: #ff7b00;
+          color: #ffffff;
           font-size: 14px;
           font-weight: 600;
       }
@@ -110,6 +110,5 @@
   .result {
     font-size: 16px;
     font-weight: 600;
-    color: #ffffff;
   }
 }

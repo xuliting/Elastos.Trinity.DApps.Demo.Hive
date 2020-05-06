@@ -41,7 +41,6 @@ export class PicturelistPage implements OnInit {
     appManager.setVisible("show");
 
     // Update system status bar every time we re-enter this screen.
-    titleBarManager.setBackgroundColor("#ff9f46");
     titleBarManager.setTitle('Hive Demo ' + this.hiveService.version.slice(16,19));
     titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
 

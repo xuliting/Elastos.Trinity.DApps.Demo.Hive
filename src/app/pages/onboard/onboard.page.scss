@@ -1,6 +1,5 @@
 .onboard-container {
   min-height: 100%;
-  background: linear-gradient(178deg,#ffb046 -66%,#f52880 371%) 0 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,26 +28,23 @@
     font-weight: 800;
     line-height: 1.23;
     letter-spacing: 0.3px;
-    color: #ffffff;
   }
 
   p {
-    font-size: 14.4px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 600;
     line-height: 1.56;
     letter-spacing: 0.9px;
-    color: #ffffff !important;
   }
 
   .btn-container {
     ion-button {
       --border-radius: 20px;
-      --background: #ffbd40;
       width: 100%;
-      height: 40px;
+      height: 45px;
 
       ion-label {
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 600;
         line-height: 5.23;
         letter-spacing: 1.52px;  

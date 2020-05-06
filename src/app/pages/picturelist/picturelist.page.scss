@@ -1,7 +1,5 @@
 .img-container, .loader-container {
     min-height: 100%;
-    background: linear-gradient(178deg,#ffb046 -66%,#f52880 371%) 0 0;
-    color: #ffffff;   
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,7 +13,7 @@
     }
 
     ion-spinner {
-        color: white;
+        color: #21313d;
     }
 
     img {
@@ -28,10 +26,9 @@
         height: 40px;
         width: 75%;
         --border-radius: 20px;
-        --background: #ffbd40;
 
         ion-label {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             line-height: 5.23;
             letter-spacing: 1.52px;  
@@ -41,11 +38,10 @@
 
 .list-container {
     ion-button {
-        margin-top: 10px;
+        margin-top: 5px;
         height: 40px;
         width: 75%;
         --border-radius: 20px;
-        --background: #ffbd40;
 
         ion-label {
             font-size: 13px;
