@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { NgZone} from '@angular/core';
 import { HiveService } from 'src/app/services/hive.service';
+import { HiveDemoService } from 'src/app/services/hivedemo.service';
+
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
@@ -22,26 +24,25 @@ export class OnedrivefilesPage implements OnInit {
       { "name": "deleteFile"},
       { "name": "fileList"},
     ];
-  
+
     public content:string = "";
-  
+
     public fileName:string = "test";
-  
+
     constructor(
       public navCtrl: NavController,
       public zone: NgZone,
       public hiveService: HiveService,
+      public hiveDemoService: HiveDemoService
     ) {}
-  
-    ngOnInit() { 
-      this.addBack();
+
+    ngOnInit() {
     }
-  
+
     ionViewDidEnter(){
-      
+
       appManager.setVisible("show");
-      titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
-  
+
       if(this.fileObj === null){
         this.hiveService.getFilesObj().then(
             (fileObj:HivePlugin.Files)=>{
@@ -51,10 +52,18 @@ export class OnedrivefilesPage implements OnInit {
         });
       }
     }
-  
+
+    ionViewWillEnter() {
+      this.hiveDemoService.setTitleBarBackKeyShown(true);
+    }
+
+    ionViewWillLeave() {
+      this.hiveDemoService.setTitleBarBackKeyShown(false);
+    }
+
     handleMethod(name:string):void{
       this.content = "";
-      this.mName ="";  
+      this.mName ="";
       switch(name){
         case "filePut":
             this.mName = "filePut";
@@ -63,22 +72,22 @@ export class OnedrivefilesPage implements OnInit {
         case "fileGetAsString":
             this.mName = "fileGetAsString";
             this.fileGetAsString();
-            break;    
+            break;
         case "fileSize":
             this.mName = "fileSize";
-            this.fileSize(); 
+            this.fileSize();
             break;
         case "deleteFile":
             this.mName = "deleteFile";
-            this.deleteFile(); 
-            break; 
+            this.deleteFile();
+            break;
         case "fileList":
             this.mName = "fileList";
-            this.fileList(); 
-                break;            
+            this.fileList();
+                break;
       }
     }
-  
+
     filePut():void{
        this.hiveService.filePut(this.fileObj,
         this.fileName,
@@ -123,33 +132,16 @@ export class OnedrivefilesPage implements OnInit {
                  alert(err);
             });
     }
-  
-  
-    addBack():void {
-      /**
-       * msgobject：{
-          "message": "navback",
-            "type": 1,
-            "from": "elastos.trinity.dApps.demo.hive"
-          }
-        */
-      titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
-      appManager.setListener((msg) => {
-        if(msg["message"] === "navback"){
-            this.navCtrl.pop();
-        }
-      });
-    }
 
     ionViewDidLeave(){
         let client = this.hiveService.getClientObj();
         if(client!=null){
             client.disConnect((info:string)=>{
-              
+
             },(err)=>{
                 alert(err);
             });
-        }  
+        }
         this.fileObj = null;
     }
   }

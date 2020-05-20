@@ -3,7 +3,8 @@ import { NavController } from '@ionic/angular';
 import { NgZone} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HiveService } from 'src/app/services/hive.service';
-declare let appManager: AppManagerPlugin.AppManager;
+import { HiveDemoService } from 'src/app/services/hivedemo.service';
+
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
@@ -12,7 +13,7 @@ declare let titleBarManager: TitleBarPlugin.TitleBarManager;
   styleUrls: ['./picturedetails.page.scss'],
 })
 export class PicturedetailsPage implements OnInit {
-    
+
     public cid:string = "";
     public contentSize: string = "";
     public showCurrentImage: string = "";
@@ -23,18 +24,16 @@ export class PicturedetailsPage implements OnInit {
       public route:ActivatedRoute,
       public navCtrl: NavController,
       public zone:NgZone,
-      public hiveService: HiveService
+      public hiveService: HiveService,
+      public hiveDemoService: HiveDemoService
      ){
-      
     }
-  
+
     ngOnInit() {
        this.init();
     }
-  
+
     init():void{
-      //Add Back listener
-      this.addBack();
       if(this.ipfsObj === null){
         this.hiveService.getIpfsObject().then((ipfs:HivePlugin.IPFS)=>{
             this.ipfsObj = ipfs;
@@ -50,11 +49,15 @@ export class PicturedetailsPage implements OnInit {
 
         }
     }
-  
-    ionViewDidEnter() {
-      //this.init();
-     }
-  
+
+    ionViewWillEnter() {
+      this.hiveDemoService.setTitleBarBackKeyShown(true);
+    }
+
+    ionViewWillLeave() {
+      this.hiveDemoService.setTitleBarBackKeyShown(false);
+    }
+
     getStringIpfs(cid:string):void{
       this.isShow = true;
       this.hiveService.ipfsGet(this.ipfsObj,cid).then((result)=>{
@@ -67,7 +70,7 @@ export class PicturedetailsPage implements OnInit {
               alert(err);
       });
     }
-  
+
     getSizeIpfs(cid:string):void{
      this.hiveService.ipfsSize(this.ipfsObj,cid).then((result)=>{
         if(result["status"] === "success"){
@@ -77,21 +80,4 @@ export class PicturedetailsPage implements OnInit {
          alert(err);
      });
     }
-  
-    addBack():void{
-        /**
-         * msgobject：{
-            "message": "navback",
-             "type": 1,
-             "from": "elastos.trinity.dApps.demo.hive"
-            }
-         */
-      titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
-      appManager.setListener((msg)=>{
-          if(msg["message"] === "navback"){
-               this.navCtrl.pop();
-          }
-       });
-    }
-  }
-
+}

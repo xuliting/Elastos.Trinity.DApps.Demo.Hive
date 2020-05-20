@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { NgZone} from '@angular/core';
 import { HiveService } from 'src/app/services/hive.service';
+import { HiveDemoService } from 'src/app/services/hivedemo.service';
 
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager: TitleBarPlugin.TitleBarManager;
@@ -16,7 +17,7 @@ export class PicturelistPage implements OnInit {
 
   public cidArr: any;
   public currentImage: string = "";
-  
+
   public ipfsObj:HivePlugin.IPFS = null;
   public skey: string = "elastos.trinity.dApps.demo.hive";
 
@@ -26,13 +27,13 @@ export class PicturelistPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public zone: NgZone,
-    public hiveService: HiveService
-    ){  
+    public hiveService: HiveService,
+    public hiveDemoService: HiveDemoService
+    ){
     this.cidArr = this.getCidArr();
   }
 
   ngOnInit() {
-    this.addBack();
   }
 
   ionViewDidEnter() {
@@ -52,6 +53,14 @@ export class PicturelistPage implements OnInit {
           alert(err);
       });
     }
+  }
+
+  ionViewWillEnter() {
+    this.hiveDemoService.setTitleBarBackKeyShown(true);
+  }
+
+  ionViewWillLeave() {
+    this.hiveDemoService.setTitleBarBackKeyShown(false);
   }
 
   takePicture():void {
@@ -108,15 +117,6 @@ export class PicturelistPage implements OnInit {
 
   go(cid:string):void {
     this.navCtrl.navigateForward('/picturedetails', { queryParams: { "cid" : cid } });
-  }
-
-  addBack():void{
-    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
-    appManager.setListener((msg) => {
-      if(msg["message"] === "navback"){
-        this.navCtrl.pop();
-      }
-    });
   }
 
   reset() {

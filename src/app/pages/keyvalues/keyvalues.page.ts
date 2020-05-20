@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { NgZone} from '@angular/core';
 import { HiveService } from 'src/app/services/hive.service';
+import { HiveDemoService } from 'src/app/services/hivedemo.service';
+
 declare let appManager: AppManagerPlugin.AppManager;
-declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
   selector: 'app-keyvalues',
@@ -30,16 +31,14 @@ export class KeyvaluesPage implements OnInit {
     public navCtrl: NavController,
     public zone: NgZone,
     public hiveService: HiveService,
+    public hiveDemoService: HiveDemoService
   ) {}
 
-  ngOnInit() { 
-    this.addBack();
+  ngOnInit() {
   }
 
   ionViewDidEnter(){
-    
     appManager.setVisible("show");
-    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
 
     if(this.keyValuesObj === null){
       this.hiveService.getKeyValuesObj().then(
@@ -51,9 +50,17 @@ export class KeyvaluesPage implements OnInit {
     }
   }
 
+  ionViewWillEnter() {
+    this.hiveDemoService.setTitleBarBackKeyShown(true);
+  }
+
+  ionViewWillLeave() {
+    this.hiveDemoService.setTitleBarBackKeyShown(false);
+  }
+
   handleMethod(name:string):void{
     this.content = "";
-    this.mName ="";  
+    this.mName ="";
     switch(name){
       case "putValue":
           this.mName = "putValue";
@@ -62,20 +69,20 @@ export class KeyvaluesPage implements OnInit {
       case "setValue":
           this.mName = "setValue";
           this.setValue();
-          break;    
+          break;
       case "getValues":
-        this.mName = "getValues";  
+        this.mName = "getValues";
         this.getValues();
           break;
       case "deleteKey":
-        this.mName = "deleteKey";   
-        this.deleteKey();  
-          break;        
+        this.mName = "deleteKey";
+        this.deleteKey();
+          break;
     }
   }
 
-  putValue():void { 
-    try {  
+  putValue():void {
+    try {
       this.hiveService.putValue(this.keyValuesObj,this.testKey,"testValue").then((result) => {
         this.content = JSON.stringify(result);
       }).catch((err)=>{
@@ -83,11 +90,11 @@ export class KeyvaluesPage implements OnInit {
       });
     } catch(err) {
        alert(JSON.stringify(err));
-    } 
+    }
   }
 
   setValue():void{
-    try {  
+    try {
         this.hiveService.setValue(this.keyValuesObj,this.testKey,"testValue111").then((result) => {
           this.content = JSON.stringify(result);
         }).catch((err)=>{
@@ -95,11 +102,11 @@ export class KeyvaluesPage implements OnInit {
         });
       } catch(err) {
           alert(JSON.stringify(err));
-      }  
+      }
   }
 
   getValues():void{
-    try {  
+    try {
         this.hiveService.getValues(this.keyValuesObj,this.testKey).then((result) => {
           this.content = JSON.stringify(result);
         }).catch((err)=>{
@@ -107,11 +114,11 @@ export class KeyvaluesPage implements OnInit {
         });
       } catch(err) {
            alert(JSON.stringify(err));
-      } 
+      }
   }
 
   deleteKey():void{
-    try {  
+    try {
         this.hiveService.deleteKey(this.keyValuesObj,this.testKey).then((result) => {
             this.content = JSON.stringify(result);
         }).catch((err)=>{
@@ -119,35 +126,18 @@ export class KeyvaluesPage implements OnInit {
         });
       } catch(err) {
          alert(JSON.stringify(err));
-      } 
-  }
-
-
-  addBack():void {
-    /**
-     * msgobject：{
-        "message": "navback",
-          "type": 1,
-          "from": "elastos.trinity.dApps.demo.hive"
-        }
-      */
-    titleBarManager.setNavigationMode(TitleBarPlugin.TitleBarNavigationMode.BACK);
-    appManager.setListener((msg) => {
-      if(msg["message"] === "navback"){
-          this.navCtrl.pop();
       }
-    });
   }
 
   ionViewDidLeave(){
    let client = this.hiveService.getClientObj();
    if(client!=null){
        client.disConnect((info:string)=>{
-          
+
        },(err)=>{
           alert(err);
        });
-   }  
+   }
     this.keyValuesObj = null;
 }
 }
