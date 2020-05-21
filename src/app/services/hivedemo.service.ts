@@ -15,7 +15,7 @@ export class HiveDemoService {
         console.log("HiveDemoService service init");
 
         titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
-        titleBarManager.setOnItemClickedListener((menuIcon)=>{
+        titleBarManager.addOnItemClickedListener((menuIcon)=>{
           if (menuIcon.key == "back") {
               this.navController.back();
           }
